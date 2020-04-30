@@ -1,1 +1,2 @@
-# React-Native-First-App
+# ToDo App
+React Native First App
