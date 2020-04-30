@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList} from 'react-native';
 
 export default function App() {
   const [newGoal,setNewGoal] = useState('');
@@ -8,7 +8,7 @@ export default function App() {
       setNewGoal(curentInputText);
   };
   const addGoalHandler = () => {
-      setGoals(currentGoals => [...goals, newGoal]);
+      setGoals(currentGoals => [...goals, { key: Math.random().toString(), value: newGoal}]);
   };
   return (
     <View style={styles.container}>
@@ -16,8 +16,12 @@ export default function App() {
         <TextInput placeholder="Your Goal" style={styles.textInput} onChangeText={goalInputHandler} value={newGoal} />
         <Button title="Add" onPress={addGoalHandler} />
       </View>
-      <View>
-      </View>
+      <FlatList data={goals} renderItem={ itemData => (
+          <View style={styles.listItem}>
+              <Text>{itemData.item.value}</Text>
+          </View>
+      )}
+      />
     </View>
   );
 }
@@ -27,12 +31,20 @@ const styles = StyleSheet.create({
     padding: 40,
   },
   textInput: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 4,
     width: '80%',
   },
   containerInput: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  listItem: {
+      padding: 10,
+      backgroundColor: '#ccc',
+      borderColor: 'black',
+      borderWidth: 1,
+      marginVertical: 7,
   },
 });
